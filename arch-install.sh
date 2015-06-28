@@ -12,6 +12,9 @@ function install {
     # update base install first
     pacman -Syyu --noconfirm
 
+    # File transfer
+    pacman -S wget curl --noconfirm
+
     # Install yaourt
     base=$(pacman -Qs base-devel)
     if [[ $base == "" ]]; then
@@ -37,9 +40,10 @@ function install {
     pacman -S cinnamon nemo nemo-fileroller
     echo "[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx" >> ~/.bashrc
 
-    pacman -S wget git curl --noconfirm
     # Compression
     pacman -S zip unzip --noconfirm
+    # Media player
+    pacman -S vlc --noconfirm
     # Programming
     pacman -S base-devel python-virtualenv nodejs npm --noconfirm
     # Web browser
