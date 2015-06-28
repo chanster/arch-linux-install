@@ -2,6 +2,7 @@
 
 echo "================================================="
 echo "This script installs my Arch Linux Default system"
+echo "Make sure you run with elevated rights!"
 echo "================================================="
 echo ""
 echo -n "Proceed with installation? [Y/n] "
@@ -11,9 +12,30 @@ function install {
     # update base install first
     pacman -Syyu --noconfirm
 
+    # Install yaourt
+    base=$(pacman -Qs base-devel)
+    if [[ $base == "" ]]; then
+        pacman -S base-devel
+    fi
+    echo "Retrieving package-query and yaourt..."
+    curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+    curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+    echo "Uncompressing package-query and yaourt..."
+    tar zxvf package-query.tar.gz
+    tar zxvf yaourt.tar.gz
+    echo "Installing package-query and yaourt..."
+    cd package-query
+    makepkg -si --noconfirm
+    cd ..
+    cd yaourt
+    makepkg -si --noconfirm
+    echo "Removing installers..."
+    cd ..
+    rm -r package-query.tar.gz yaourt.tar.gz package-query yaourt
+
     #Installing Desktop and start on tty1"
     pacman -S cinnamon nemo nemo-fileroller
-    echo "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx" >> ~/.bashrc
+    echo "[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx" >> ~/.bashrc
 
     pacman -S wget git curl --noconfirm
     # Compression
