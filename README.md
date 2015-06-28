@@ -1,2 +1,2 @@
-# arch-linux-install
-Arch LInux Setup
+# Arch Linux Install
+This automates my Arch Linux application setup
