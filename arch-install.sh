@@ -38,6 +38,7 @@ function install {
 
     #Installing Desktop and start on tty1"
     pacman -S cinnamon nemo nemo-fileroller
+    echo "exec cinnamon-session" >> ~/.xinitrc
     echo "[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && exec startx" >> ~/.bashrc
 
     # Compression
